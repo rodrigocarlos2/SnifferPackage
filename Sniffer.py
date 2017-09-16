@@ -1,4 +1,3 @@
-
 import socket, sys, time, platform, struct
 
 # Special lists used for calculations.
@@ -245,7 +244,9 @@ def ip(packet, extractedAttIndex, printKey):
 		# Print IP Header
 		# Some segments of the header are switched back to hex form because that
 		# 	is the format wireshark has it.
-		unpackedInfo.append('\n********************\n******** IP ********\n********************')
+
+		if str(ipSourceAddress)!='10.180.23.248':
+			unpackedInfo.append('\n********************\n******** IP ********\n********************')
 		
 		if (extractedAttIndex == 1) or (extractedAttIndex == 0):
 			unpackedInfo.append('Version: ' + str(ipVersion))
@@ -270,7 +271,8 @@ def ip(packet, extractedAttIndex, printKey):
 		if (extractedAttIndex == 11) or (extractedAttIndex == 0):
 			unpackedInfo.append('Header Checksum: ' + format(ipHeaderChecksum, '#04X'))
 		if (extractedAttIndex == 12) or (extractedAttIndex == 0):
-			unpackedInfo.append('Source Address: ' + str(ipSourceAddress))
+			if str(ipSourceAddress)!='10.180.23.248':
+				unpackedInfo.append('Source Address: ' + str(ipSourceAddress) + ' - Bytes: ' + str(ipTotalLength+14))
 		if (extractedAttIndex == 13) or (extractedAttIndex == 0):
 			unpackedInfo.append('Destination Address: ' + str(ipDestAddress))
 	else:
